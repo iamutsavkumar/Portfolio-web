@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Utsav Kumar | AI & ML Developer Portfolio</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Utsav Kumar — AI & ML Developer Portfolio. Projects in Machine Learning, NLP, and Data Science.">
+  <meta name="keywords" content="AI Developer, Machine Learning, Portfolio, Utsav Kumar, NLP, Data Science">
+  <meta name="author" content="Utsav Kumar">
+
+  <!-- Open Graph (for LinkedIn, WhatsApp, etc.) -->
+  <meta property="og:title" content="Utsav Kumar | AI & ML Developer Portfolio">
+  <meta property="og:description" content="AI & ML projects, NLP, and data-driven solutions.">
+  <meta property="og:image" content="https://utsavkumar.online/assets/preview.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://utsavkumar.online">
+
+  <!-- Twitter (optional but good) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Utsav Kumar | AI Developer Portfolio">
+  <meta name="twitter:description" content="AI & ML projects, NLP, and data-driven solutions.">
+  <meta name="twitter:image" content="https://utsavkumar.online/assets/preview.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ░░ LOADER ░░ -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+    </div>
+  </div>
+
+  <!-- ░░ CURSOR ░░ -->
+  <div id="cursor" aria-hidden="true"></div>
+  <div id="cursor-follower" aria-hidden="true"></div>
+
+  <!-- ░░ NAVBAR ░░ -->
+  <header id="navbar">
+    <nav class="nav-container" role="navigation" aria-label="Main navigation">
+      <a href="#hero" class="nav-logo">
+        <img src="assets/logo.png" alt="Utsav Logo" class="logo-img">
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- CTA -->
+      <a href="#contact" class="nav-cta">Let’s Connect</a>
+
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <ul role="list">
+        <li><a href="#about" class="mobile-link">About</a></li>
+        <li><a href="#projects" class="mobile-link">Projects</a></li>
+        <li><a href="#skills" class="mobile-link">Skills</a></li>
+        <li><a href="#contact" class="mobile-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+         HERO
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+    <section id="hero" aria-label="Hero section">
+      <!-- animated grid background -->
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <!-- ⭐ SHOOTING STARS CANVAS (ADD THIS) -->
+      <canvas id="stars-canvas"></canvas>
+
+      <!-- floating blobs -->
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <div class="blob blob-2" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow reveal-up">CS Student • Crafting Intelligent Systems with AI</p>
+
+        <h1 class="hero-title reveal-up" style="--delay:.1s">
+          Code speaks<br/>
+          <span class="title-highlight">for</span><br/>
+          itself here.
+        </h1>
+
+        <p class="hero-desc reveal-up" style="--delay:.2s">
+          Passionate about AI and Machine Learning, I create projects that solve 
+          real-world problems using data and code.
+        </p>
+
+        <div class="hero-actions reveal-up" style="--delay:.3s">
+          <a href="#projects" class="btn btn-primary">
+            View My Work <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+        </div>
+
+        <!-- scroll indicator -->
+        <div class="scroll-hint reveal-up" style="--delay:.5s" aria-hidden="true">
+          <span class="scroll-line"></span>
+          <span class="scroll-label">Scroll</span>
+        </div>
+      </div>
+
+
+      <!-- floating stat chips -->
+      <!-- <div class="stat-chips" aria-label="Highlights">
+        <div class="stat-chip reveal-up" style="--delay:.4s">
+          <strong>00</strong><span>Years Exp.</span>
+        </div>
+        <div class="stat-chip reveal-up" style="--delay:.45s">
+          <strong>00</strong><span>Projects</span>
+        </div>
+        <div class="stat-chip reveal-up" style="--delay:.5s">
+          <strong>00</strong><span>Clients</span>
+        </div>
+      </div> -->
+    </section>
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+         ABOUT
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+    <section id="about" aria-label="About me">
+      <div class="container">
+        <div class="about-grid">
+
+          <!-- Image column -->
+          <div class="about-img-wrap reveal-left">
+          <div class="about-img-frame">
+
+            <!-- Your real profile image -->
+            <div class="avatar-placeholder" aria-label="Utsav Kumar portrait">
+              <img src="assets/profile.png" alt="Utsav Kumar" class="avatar-img" loading="lazy" />
+            </div>
+
+            <!-- decorative elements -->
+            <div class="img-badge">
+              <i class="fa-solid fa-code"></i>
+              <span>Open to Work</span>
+            </div>
+
+          </div>
+        </div>
+
+          <!-- Text column -->
+          <div class="about-text">
+            <p class="section-eyebrow reveal-up">About Me</p>
+            <h2 class="section-title reveal-up" style="--delay:.05s">
+              Building<br/>intelligence,&nbsp;one<br/>project&nbsp;at&nbsp;a&nbsp;time.
+            </h2>
+
+            <p class="about-bio reveal-up" style="--delay:.1s">
+              Hi, I'm <strong>Utsav Kumar</strong> — a Computer Science student specializing in
+              Artificial Intelligence and Machine Learning. I enjoy building projects that turn
+              data into meaningful insights and intelligent solutions.
+            </p>
+
+            <p class="about-bio reveal-up" style="--delay:.15s">
+              I’m constantly learning and exploring new technologies, working on real-world projects,
+              and improving my problem-solving skills to grow as a future Machine Learning Engineer.
+            </p>
+
+            <!-- quick facts -->
+            <ul class="about-facts reveal-up" style="--delay:.2s" role="list">
+              <li><i class="fa-solid fa-location-dot"></i>New Delhi, India</li>
+              <li><i class="fa-solid fa-graduation-cap"></i> B.Tech CSE(AIML), Sushant University</li>
+              <li><i class="fa-solid fa-briefcase"></i>Open to Internships & Opportunities</li>
+              <li><i class="fa-solid fa-envelope"></i> kutsav222@gmail.com</li>
+            </ul>
+
+            <a href="assets/Utsav_Kumar_CV.pdf" class="btn btn-primary reveal-up" style="--delay:.25s" download>Download Resume <i class="fa-solid fa-download"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+         PROJECTS
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+    <section id="projects" aria-label="Projects">
+      <div class="container">
+        
+        <div class="section-header reveal-up">
+          <p class="section-eyebrow">Projects</p>
+          <h2 class="section-title">What I’ve built.</h2>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+
+          <!-- Project 1 -->
+          <article class="project-card reveal-up">
+            
+            <div class="card-img">
+              <img src="assets/project-1.png" alt="AI Resume Analyzer UI" class="project-img" loading="lazy" />
+              <span class="card-badge">LLM</span>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">AI Resume Analyzer</h3>
+
+              <p class="card-desc">
+                An AI-powered resume analyzer built using LLMs that provides instant feedback, scoring, skill gap detection, and exportable reports.
+              </p>
+
+              <ul class="card-tags" role="list">
+                <li>Python</li>
+                <li>NLP</li>
+                <li>Streamlit</li>
+                <li>API Integration</li>
+                <li>Generative AI</li>
+              </ul>
+
+              <div class="card-actions">
+                <a href="https://resume-analyzer-utsavkumar.streamlit.app/" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+                <a href="https://github.com/iamutsavkumar/ai-resume-analyzer" class="btn btn-sm btn-ghost">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card reveal-up">
+  
+            <div class="card-img">
+              <img src="assets/project-2.png" alt="AI Resume Analyzer UI" class="project-img" loading="lazy"/>
+              <span class="card-badge">NLP</span>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Plagiarism Checker</h3>
+
+              <p class="card-desc">
+                AI-powered plagiarism checker using FastAPI, NLP, and semantic similarity (Jaccard, TF-IDF, transformers).
+              </p>
+
+              <ul class="card-tags" role="list">
+                <li>FastAPI</li>
+                <li>OCR</li>
+                <li>API Integration</li>
+                <li>TD-IDF</li>
+                <li>Jaccard Similarity</li>
+              </ul>
+
+              <div class="card-actions">
+                <a href="https://plagiarism-checker-j9bs.onrender.com/" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+                <a href="https://github.com/iamutsavkumar/Plagiarism-Checker" class="btn btn-sm btn-ghost">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card reveal-up" data-category="tool">
+            <div class="card-img">
+              <img src="assets/project-3.png" alt="AI Resume Analyzer UI" class="project-img" loading="lazy" />
+              <span class="card-badge">NLP</span>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Fake News Detector</h3>
+
+              <p class="card-desc">
+                 Fake news detector that classifies content as REAL, FAKE, or UNCERTAIN using machine learning and heuristic analysis.
+              </p>
+
+              <ul class="card-tags" role="list">
+                <li>FastAPI</li>
+                <li>React</li>
+                <li>Python</li>
+                <li>Scikit-learn</li>
+                <li>Machine Learning</li>
+              </ul>
+
+              <div class="card-actions">
+                <a href="#" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+                <a href="https://github.com/iamutsavkumar/Fake-news-detector" class="btn btn-sm btn-ghost">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+              </div>
+            </div>
+
+          </article>
+
+          <!-- Project 4 -->
+          <!-- <article class="project-card reveal-up" data-category="fullstack">
+            <div class="card-img">
+              <img src="assets/coming-soon.jpg" alt="AI Resume Analyzer UI" class="project-img" loading="lazy" />
+              <span class="card-badge">BADGE</span>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Under Development</h3>
+
+              <p class="card-desc">
+                This project is currently under development. New features and improvements are being actively added to enhance functionality and user experience.
+              </p>
+
+              <ul class="card-tags" role="list">
+                <li>Tag-one</li>
+                <li>Tag-two</li>
+                <li>Tag-three</li>
+                <li>Tag-four</li>
+              </ul>
+
+              <div class="card-actions">
+                <a href="#" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+                <a href="#" class="btn btn-sm btn-ghost">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+              </div>
+            </div>
+
+          </article> -->
+
+          <!-- Project 5 -->
+          <!-- <article class="project-card reveal-up" data-category="frontend">
+            <div class="card-img">
+              <img src="assets/coming-soon-2.jpg" alt="AI Resume Analyzer UI" class="project-img" loading="lazy" />
+              <span class="card-badge">CNN</span>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Plant Disease Detection</h3>
+
+              <p class="card-desc">
+                An AI-powered plant disease detection system that analyzes leaf images to identify diseases, provide treatment advice, and assist in smart farming decisions.
+              </p>
+
+              <ul class="card-tags" role="list">
+                <li>TensorFlow</li>
+                <li>Image Classification</li>
+                <li>Deep Learning</li>
+                <li>Computer Vision</li>
+              </ul>
+
+              <div class="card-actions">
+                <a href="#" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+                <a href="https://github.com/iamutsavkumar/Plant-disease-detection" class="btn btn-sm btn-ghost">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+              </div>
+            </div>
+
+          </article> -->
+
+          <!-- Project 6 -->
+          <!-- <article class="project-card reveal-up" data-category="tool">
+            <div class="card-img">
+              <img src="assets/coming-soon.jpg" alt="AI Resume Analyzer UI" class="project-img" loading="lazy"/>
+              <span class="card-badge">BADGE</span>
+            </div>
+
+            <div class="card-body">
+              <h3 class="card-title">Under Development</h3>
+
+              <p class="card-desc">
+                This project is currently under development. New features and improvements are being actively added to enhance functionality and user experience.
+              </p>
+
+              <ul class="card-tags" role="list">
+                <li>Tag-one</li>
+                <li>Tag-two</li>
+                <li>Tag-three</li>
+                <li>Tag-four</li>
+              </ul>
+
+              <div class="card-actions">
+                <a href="#" class="btn btn-sm btn-primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+                <a href="#" class="btn btn-sm btn-ghost">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+              </div>
+            </div>
+
+          </article> -->
+        </div><!-- /projects-grid -->
+        
+        <div class="projects-more reveal-up" style="--delay:.2s">
+          <a href="https://github.com/iamutsavkumar" target="_blank" class="btn btn-primary">
+            <i class="fa-brands fa-github"></i>
+            View More Projects
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+         SKILLS
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+    <section id="skills" aria-label="Skills">
+      <div class="container">
+        <div class="section-header reveal-up">
+          <p class="section-eyebrow">Toolkit</p>
+          <h2 class="section-title">Technologies I work with.</h2>
+        </div>
+
+        <div class="skills-layout">
+
+<!-- Progress bars (left) -->
+<div class="skills-bars reveal-left">
+  <h3 class="skills-sub">Core Proficiencies</h3>
+
+  <div class="skill-bar-item">
+    <div class="skill-bar-label">
+      <span>Python</span><span class="skill-level"></span>
+    </div>
+    <div class="skill-track" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+      <div class="skill-fill" data-pct="60"></div>
+    </div>
+  </div>
+
+  <div class="skill-bar-item">
+    <div class="skill-bar-label">
+      <span>Machine Learning</span><span class="skill-level"></span>
+    </div>
+    <div class="skill-track" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+      <div class="skill-fill" data-pct="50"></div>
+    </div>
+  </div>
+
+    <div class="skill-bar-item">
+    <div class="skill-bar-label">
+      <span>Data Analysis</span><span class="skill-level"></span>
+    </div>
+    <div class="skill-track" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+      <div class="skill-fill" data-pct="65"></div>
+    </div>
+  </div>
+
+  <div class="skill-bar-item">
+    <div class="skill-bar-label">
+      <span>NLP</span><span class="skill-level"></span>
+    </div>
+    <div class="skill-track" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+      <div class="skill-fill" data-pct="50"></div>
+    </div>
+  </div>
+
+  <div class="skill-bar-item">
+    <div class="skill-bar-label">
+      <span>Deep Learning</span><span class="skill-level"></span>
+    </div>
+    <div class="skill-track" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+      <div class="skill-fill" data-pct="40"></div>
+    </div>
+  </div>
+
+  <div class="skill-bar-item">
+    <div class="skill-bar-label">
+      <span>Web Development</span><span class="skill-level"></span>
+    </div>
+    <div class="skill-track" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+      <div class="skill-fill" data-pct="75"></div>
+    </div>
+  </div>
+
+</div>
+
+          <!-- Icon grid (right) -->
+          <div class="skills-icons reveal-right">
+            <h3 class="skills-sub">Tools & Technologies</h3>
+
+            <div class="icon-grid">
+
+              <!-- Programming & Data -->
+              <div class="icon-item"><i class="fa-solid fa-chart-bar"></i><span>NumPy</span></div>
+              <div class="icon-item"><i class="fa-solid fa-chart-line"></i><span>Pandas</span></div>
+
+              <!-- Machine Learning -->
+              <div class="icon-item"><i class="fa-solid fa-brain"></i><span>Scikit-learn</span></div>
+
+              <!-- Frameworks -->
+              <div class="icon-item"><i class="fa-solid fa-flask"></i><span>Flask</span></div>
+              <div class="icon-item"><i class="fa-solid fa-cloud"></i><span>Streamlit</span></div>
+
+              <!-- Data & Visualization -->
+              <div class="icon-item"><i class="fa-solid fa-chart-pie"></i><span>Power BI</span></div>
+
+              <!-- Databases -->
+              <div class="icon-item"><i class="fa-solid fa-database"></i><span>MySQL</span></div>
+
+              <!-- Dev Tools -->
+              <div class="icon-item"><i class="fa-brands fa-git-alt"></i><span>Git</span></div>
+              <div class="icon-item"><i class="fa-brands fa-docker"></i><span>Docker</span></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+         CONTACT
+    ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+    <section id="contact" aria-label="Contact">
+      <div class="container">
+        <div class="contact-layout">
+
+          <!-- Left info -->
+          <div class="contact-info reveal-left">
+            <p class="section-eyebrow">Contact</p>
+            <h2 class="section-title">Let's build something<br/>together.</h2>
+            <p class="contact-desc">
+              Always excited to work on AI-driven projects and learn new things.
+              Drop a message — let’s create something meaningful.
+            </p>
+
+            <ul class="contact-details" role="list">
+              <li>
+                <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div>
+                  <strong>Email</strong>
+                  <a href="mailto:kutsav222@gmail.com">kutsav222@gmail.com</a>
+                </div>
+              </li>
+              <li>
+                <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                <div>
+                  <strong>Phone</strong>
+                  <a href="tel:+14155550100">+91 9643228950</a>
+                </div>
+              </li>
+              <li>
+                <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div>
+                  <strong>Location</strong>
+                  <span>New Delhi, India</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right form -->
+          <div class="contact-form-wrap reveal-right">
+            <form id="contactForm" novalidate aria-label="Contact form">
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input type="text" id="name" name="name" placeholder="Jane Smith" autocomplete="name" />
+                  <span class="form-error" id="nameError" role="alert"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" placeholder="jane@example.com" autocomplete="email" />
+                  <span class="form-error" id="emailError" role="alert"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="Project Collaboration" />
+                <span class="form-error" id="subjectError" role="alert"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Tell me about your project…"></textarea>
+                <span class="form-error" id="messageError" role="alert"></span>
+              </div>
+
+              <button 
+                id="submitBtn"
+                class="g-recaptcha btn btn-primary btn-full"
+                data-sitekey="6LfFEL4sAAAAAOIPwH1jt35MzWhTABPH3xUQubhd"
+                data-callback="onSubmit"
+                data-size="invisible"
+                data-badge="bottomright">
+
+                Send Message <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            
+
+              <!-- Success toast -->
+              <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Message sent! I'll get back to you soon.</span>
+              </div>
+
+              <!-- ✅ Honeypot (improved version) -->
+              <input 
+                type="text" 
+                name="company" 
+                tabindex="-1" 
+                autocomplete="off" 
+                style="position:absolute; left:-9999px;"
+              >
+
+            </form>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer id="footer" role="contentinfo">
+  <div class="container footer-inner">
+
+    <!-- Logo -->
+    <a href="#hero" class="nav-logo footer-logo">
+      <img src="assets/footer-logo.png" alt="Utsav Logo" class="logo-img" loading="lazy">
+    </a>
+
+    <!-- Bottom section -->
+    <div class="footer-bottom">
+
+      <!-- Left: Copyright -->
+      <p class="footer-copy">
+        © <span id="footerYear"></span> Utsav Kumar. Crafted with
+        <i class="fa-solid fa-heart" aria-hidden="true"></i> &amp; lots of coffee.
+      </p>
+
+      <!-- Right: reCAPTCHA note -->
+      <p class="recaptcha-note">
+        Protected by reCAPTCHA • 
+        <a href="https://policies.google.com/privacy" target="_blank">Privacy</a> • 
+        <a href="https://policies.google.com/terms" target="_blank">Terms</a>
+      </p>
+
+    </div>
+
+    <!-- Social links -->
+    <ul class="social-links" role="list" aria-label="Social media links">
+      <li>
+        <a href="https://github.com/iamutsavkumar" aria-label="GitHub profile" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/utsav-kumar28" aria-label="LinkedIn profile" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</footer>
+
+  <!-- ░░ BACK TO TOP ░░ -->
+  <button id="backToTop" aria-label="Back to top" title="Back to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- Main script -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="script.js"></script>
+</body>
+</html>
