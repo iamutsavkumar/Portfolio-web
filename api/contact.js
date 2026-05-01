@@ -4,16 +4,39 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 🔧 Fix body parsing (important for Vercel)
+    // 🔧 Parse body (Vercel safe)
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-    const { name, email, subject, message } = body;
+
+    const { name, email, subject, message, token } = body;
 
     // 🔍 Validation
     if (!name || !email || !message) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res.status(400).json({ success: false, error: "Missing required fields" });
     }
 
-    // 🚀 Send request to EmailJS
+    // 🔐 reCAPTCHA verification (IMPORTANT)
+    if (!token) {
+      return res.status(400).json({ success: false, error: "Missing reCAPTCHA token" });
+    }
+
+    const verifyRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `secret=${process.env.RECAPTCHA_SECRET}&response=${token}`
+    });
+
+    const verifyData = await verifyRes.json();
+
+    if (!verifyData.success) {
+      return res.status(400).json({
+        success: false,
+        error: "reCAPTCHA verification failed"
+      });
+    }
+
+    // 🚀 Send Email via EmailJS
     const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
       method: "POST",
       headers: {
@@ -32,11 +55,9 @@ export default async function handler(req, res) {
       })
     });
 
-    // 🔥 Get FULL response (IMPORTANT)
     const resultText = await response.text();
     console.log("EmailJS response:", resultText);
 
-    // ❌ If EmailJS failed → show exact error
     if (!response.ok) {
       return res.status(500).json({
         success: false,

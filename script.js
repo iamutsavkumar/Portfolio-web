@@ -303,7 +303,7 @@ function getSkillLevel(pct) {
   return { text: "Professional", class: "professional" };
 }
 /* ================================================================
-   7. CONTACT FORM VALIDATION
+   7. CONTACT FORM VALIDATION (FIXED)
 ================================================================ */
 function initContactForm() {
   const form       = document.getElementById('contactForm');
@@ -346,7 +346,7 @@ function initContactForm() {
   });
 
   /* --- Submit --- */
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     let isValid = true;
@@ -367,23 +367,29 @@ function initContactForm() {
       return;
     }
 
-    // 🔐 reCAPTCHA check
-    if (!isVerified) {
-      if (typeof grecaptcha !== "undefined") {
-        grecaptcha.execute();
-      } else {
-        alert("reCAPTCHA not loaded");
-      }
+    // 🔐 reCAPTCHA execution (correct flow)
+    if (typeof grecaptcha === "undefined") {
+      alert("reCAPTCHA not loaded");
       return;
     }
 
-    isVerified = false;
+    grecaptcha.ready(function () {
+      grecaptcha.execute('6LfFEL4sAAAAAOIPwH1jt35MzWhTABPH3xUQubhd', { action: 'submit' })
+        .then(function (token) {
+          sendForm(token);
+        });
+    });
+
+  });
+
+  /* --- Send Form (after reCAPTCHA) --- */
+  async function sendForm(token) {
 
     // 🛑 Honeypot
     const honeypot = form.querySelector('[name="company"]');
     if (honeypot && honeypot.value.trim() !== "") return;
 
-    // ⏱️ Rate limit (1 min)
+    // ⏱️ Rate limit
     const lastSent = localStorage.getItem("lastSentTime");
     const now = Date.now();
 
@@ -409,7 +415,6 @@ function initContactForm() {
       successMsg.classList.add('visible');
     }, 8000);
 
-    // 🚀 SEND TO BACKEND
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -418,7 +423,8 @@ function initContactForm() {
           name: fields.name.el.value,
           email: fields.email.el.value,
           subject: fields.subject.el.value,
-          message: fields.message.el.value
+          message: fields.message.el.value,
+          token
         })
       });
 
@@ -433,7 +439,7 @@ function initContactForm() {
         successMsg.classList.add('visible');
         form.reset();
       } else {
-        throw new Error("Failed");
+        throw new Error(data.error || "Failed");
       }
 
     } catch (err) {
@@ -441,13 +447,12 @@ function initContactForm() {
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
 
-      successMsg.textContent = "⚠️ Something went wrong.";
+      successMsg.textContent = "⚠️ " + err.message;
       successMsg.classList.add('visible');
 
       console.error("Backend error:", err);
     }
-
-  });
+  }
 
   /* --- Helper --- */
   function showFieldError(el, errorEl, message) {
@@ -459,6 +464,7 @@ function initContactForm() {
       errorEl.textContent = '';
     }
   }
+
 
   /* --- Shake animation --- */
   const style = document.createElement('style');
