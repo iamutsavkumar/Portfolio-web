@@ -327,7 +327,7 @@ function initContactForm() {
     message: (v) => v.trim().length >= 20  ? '' : 'Message should be at least 20 characters.',
   };
 
-  /* --- Live validation on blur --- */
+  /* --- Live validation --- */
   Object.keys(fields).forEach(key => {
     const { el, errorEl } = fields[key];
     if (!el) return;
@@ -337,7 +337,6 @@ function initContactForm() {
       showFieldError(el, errorEl, error);
     });
 
-    // Clear error on input
     el.addEventListener('input', () => {
       if (el.classList.contains('error-field')) {
         const error = validators[key](el.value);
@@ -346,123 +345,112 @@ function initContactForm() {
     });
   });
 
-/* --- Submit --- */
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
+  /* --- Submit --- */
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  let isValid = true;
+    let isValid = true;
 
-  // Validate all fields
-  Object.keys(fields).forEach(key => {
-    const { el, errorEl } = fields[key];
-    if (!el) return;
-    const error = validators[key](el.value);
-    if (error) isValid = false;
-    showFieldError(el, errorEl, error);
+    // Validate fields
+    Object.keys(fields).forEach(key => {
+      const { el, errorEl } = fields[key];
+      const error = validators[key](el.value);
+      if (error) isValid = false;
+      showFieldError(el, errorEl, error);
+    });
+
+    if (!isValid) {
+      form.style.animation = 'none';
+      requestAnimationFrame(() => {
+        form.style.animation = 'formShake .4s ease';
+      });
+      return;
+    }
+
+    // 🔐 reCAPTCHA check
+    if (!isVerified) {
+      if (typeof grecaptcha !== "undefined") {
+        grecaptcha.execute();
+      } else {
+        alert("reCAPTCHA not loaded");
+      }
+      return;
+    }
+
+    isVerified = false;
+
+    // 🛑 Honeypot
+    const honeypot = form.querySelector('[name="company"]');
+    if (honeypot && honeypot.value.trim() !== "") return;
+
+    // ⏱️ Rate limit (1 min)
+    const lastSent = localStorage.getItem("lastSentTime");
+    const now = Date.now();
+
+    if (lastSent && now - lastSent < 60000) {
+      alert("Please wait before sending another message.");
+      return;
+    }
+
+    localStorage.setItem("lastSentTime", now);
+
+    // UI state
+    successMsg.textContent = "";
+    successMsg.classList.remove('visible');
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending…';
+
+    const timeout = setTimeout(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
+
+      successMsg.textContent = "⚠️ Request timed out.";
+      successMsg.classList.add('visible');
+    }, 8000);
+
+    // 🚀 SEND TO BACKEND
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: fields.name.el.value,
+          email: fields.email.el.value,
+          subject: fields.subject.el.value,
+          message: fields.message.el.value
+        })
+      });
+
+      const data = await res.json();
+
+      clearTimeout(timeout);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
+
+      if (data.success) {
+        successMsg.textContent = "✅ Message sent successfully!";
+        successMsg.classList.add('visible');
+        form.reset();
+      } else {
+        throw new Error("Failed");
+      }
+
+    } catch (err) {
+      clearTimeout(timeout);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
+
+      successMsg.textContent = "⚠️ Something went wrong.";
+      successMsg.classList.add('visible');
+
+      console.error("Backend error:", err);
+    }
+
   });
 
-  // ❌ Stop if validation fails
-  if (!isValid) {
-    form.style.animation = 'none';
-    requestAnimationFrame(() => {
-      form.style.animation = 'formShake .4s ease';
-    });
-    return;
-  }
-
-  // 🔐 Invisible reCAPTCHA trigger
-  if (!isVerified) {
-    if (typeof grecaptcha !== "undefined") {
-      grecaptcha.execute();
-    } else {
-      alert("reCAPTCHA not loaded");
-    }
-    return;
-  }
-
-  // reset after verification
-  isVerified = false;
-
-if (successMsg) {
-  successMsg.textContent = "";
-  successMsg.classList.remove('visible');
-}
-
-submitBtn.disabled = true;
-submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending…';
-
-const timeout = setTimeout(() => {
-  if (submitBtn.disabled) {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
-
-    if (successMsg) {
-      successMsg.textContent = "⚠️ Request timed out. Try again.";
-      successMsg.classList.add('visible');
-    }
-  }
-}, 8000);
-
-// ✅ Anti-spam: Honeypot check
-const honeypot = form.querySelector('[name="company"]');
-if (honeypot && honeypot.value.trim() !== "") {
-  return; // bot detected → silently stop
-}
-
-// 🚀 Send form
-emailjs.sendForm(
-  "service_u62oj03",
-  "template_r3v0ino",
-  form,
-  "zRxMvoD84k-pTNJvS"
-).then(() => {
-
-  clearTimeout(timeout);
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
-
-  // ✅ Reset reCAPTCHA after success
-  if (typeof grecaptcha !== "undefined") {
-    grecaptcha.reset();
-  }
-
-  if (successMsg) {
-    successMsg.textContent = "✅ Message sent successfully!";
-    successMsg.classList.add('visible');
-
-    setTimeout(() => {
-      successMsg.classList.remove('visible');
-    }, 4000);
-  }
-
-  form.reset();
-
-}).catch((err) => {
-
-  clearTimeout(timeout);
-  submitBtn.disabled = false;
-  submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
-
-  // ✅ Reset reCAPTCHA on failure too
-  if (typeof grecaptcha !== "undefined") {
-    grecaptcha.reset();
-  }
-
-  if (successMsg) {
-    successMsg.textContent = "⚠️ Something went wrong. Try again later or email me directly.";
-    successMsg.classList.add('visible');
-  }
-
-  console.error("EmailJS error:", err);
-
-});
-
-
-});
-
-  /* Helper */
+  /* --- Helper --- */
   function showFieldError(el, errorEl, message) {
-    if (!el || !errorEl) return;
     if (message) {
       el.classList.add('error-field');
       errorEl.textContent = message;
@@ -472,18 +460,18 @@ emailjs.sendForm(
     }
   }
 
-  /* Add shake keyframes dynamically */
-  const shakeStyle = document.createElement('style');
-  shakeStyle.textContent = `
+  /* --- Shake animation --- */
+  const style = document.createElement('style');
+  style.textContent = `
     @keyframes formShake {
       0%, 100% { transform: translateX(0); }
-      20%       { transform: translateX(-8px); }
-      40%       { transform: translateX(8px); }
-      60%       { transform: translateX(-5px); }
-      80%       { transform: translateX(5px); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
     }
   `;
-  document.head.appendChild(shakeStyle);
+  document.head.appendChild(style);
 }
 
 /* ================================================================

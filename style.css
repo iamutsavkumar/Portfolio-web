@@ -838,8 +838,7 @@ body.cursor-hover #cursor-follower { width: 56px; height: 56px; opacity: .3; }
   position: relative;
   height: 230px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center;   justify-content: center;
   background: linear-gradient(
     135deg,
     hsl(var(--hue, 245deg) 60% 15%) 0%,
@@ -1185,8 +1184,7 @@ body.cursor-hover #cursor-follower { width: 56px; height: 56px; opacity: .3; }
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
+  display: flex;   flex-direction: column;
   margin-bottom: 1.25rem;
 }
 
