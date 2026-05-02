@@ -13,7 +13,7 @@ let isVerified = false;
 document.addEventListener('DOMContentLoaded', () => {
 
   initLoader();
-  initCursor();
+  // initCursor();
   initNavbar();
   initScrollReveal();
   initProjectFilter();
@@ -24,6 +24,40 @@ document.addEventListener('DOMContentLoaded', () => {
   initPremiumStars();
 
 });
+
+  /* --- Shake animation --- */
+  // Inject shake animation once globally
+  if (!document.getElementById("formShakeStyle")) {
+  const style = document.createElement('style');
+  style.id = "formShakeStyle";
+
+  style.textContent = `
+    /* ───── FORM SHAKE ───── */
+    @keyframes formShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+      90% { transform: translateX(-2px); }
+    }
+
+    .shake {
+      animation: formShake 0.4s ease;
+    }
+
+    /* ───── ICON FLOAT FIX (ALL ROWS WAVE) ───── */
+    .icon-item {
+      animation: floatMove 4s ease-in-out infinite;
+    }
+
+    .icon-item:nth-child(3n + 1) { animation-delay: 0s; }
+    .icon-item:nth-child(3n + 2) { animation-delay: 0.5s; }
+    .icon-item:nth-child(3n + 3) { animation-delay: 1s; }
+  `;
+
+  document.head.appendChild(style);
+}
 
 /* ================================================================
    1. LOADER
@@ -45,66 +79,6 @@ function initLoader() {
       // Remove from DOM after transition
       loader.addEventListener('transitionend', () => loader.remove(), { once: true });
     }, wait);
-  });
-}
-
-/* ================================================================
-   2. CUSTOM CURSOR
-================================================================ */
-function initCursor() {
-  const cursor   = document.getElementById('cursor');
-  const follower = document.getElementById('cursor-follower');
-  if (!cursor || !follower) return;
-
-  // Only activate on pointer devices
-  if (!window.matchMedia('(hover: hover)').matches) return;
-
-  let mouseX = -100, mouseY = -100;
-  let followerX = -100, followerY = -100;
-  let rafId;
-
-  // Update dot position immediately
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top  = mouseY + 'px';
-  });
-
-  // Animate follower with lag
-  function animateFollower() {
-    followerX += (mouseX - followerX) * 0.14;
-    followerY += (mouseY - followerY) * 0.14;
-    follower.style.left = followerX + 'px';
-    follower.style.top  = followerY + 'px';
-    rafId = requestAnimationFrame(animateFollower);
-  }
-  rafId = requestAnimationFrame(animateFollower);
-
-  // Hover state on interactive elements
-  const interactiveSelector = 'a, button, input, textarea, [role="tab"], .project-card, .icon-item';
-
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(interactiveSelector)) {
-      document.body.classList.add('cursor-hover');
-    }
-  });
-
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest(interactiveSelector)) {
-      document.body.classList.remove('cursor-hover');
-    }
-  });
-
-  // Hide when leaving window
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity   = '0';
-    follower.style.opacity = '0';
-  });
-
-  document.addEventListener('mouseenter', () => {
-    cursor.style.opacity   = '1';
-    follower.style.opacity = '0.6';
   });
 }
 
@@ -465,19 +439,6 @@ function initContactForm() {
     }
   }
 
-
-  /* --- Shake animation --- */
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes formShake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-8px); }
-      40% { transform: translateX(8px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 /* ================================================================
