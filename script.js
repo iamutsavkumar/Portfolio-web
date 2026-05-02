@@ -490,9 +490,8 @@ function onSubmit(token) {
 }
 
 
-
 /* ================================================================
-   10. Star Falling Animation
+   11. Star Falling Animation
 ================================================================ */
 
 function initPremiumStars() {
