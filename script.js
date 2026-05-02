@@ -481,10 +481,6 @@ function initFooterYear() {
 })();
 
 
-(function() {
-  emailjs.init("zRxMvoD84k-pTNJvS"); // replace
-})();
-
 function onSubmit(token) {
   console.log("reCAPTCHA triggered ✅", token);
   isVerified = true;
